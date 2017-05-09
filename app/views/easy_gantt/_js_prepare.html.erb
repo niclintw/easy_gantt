@@ -1,0 +1,108 @@
+<%= content_for :header_tags do %>
+  <script type="text/javascript">
+    window.ysy = window.ysy || {};
+    ysy.settings = ysy.settings || {};
+    $.extend(true, ysy.settings, {
+      easyRedmine: <%= EasyGantt.easy_extensions? %>,
+      isGantt: <%= params[:controller] == 'easy_gantt' %>,
+      language: '<%= j I18n.locale.to_s %>',
+      <% if @project %>
+      project: <%= { id: @project.id, name: @project.name }.to_json.html_safe %>,
+      <% end %>
+//      apiKey: "<%= User.current.api_key %>",
+      dateFormat: '<%=j Setting.date_format %>',
+      nonWorkingWeekDays: <%= EasyGantt.non_working_week_days.to_json.html_safe %>,
+      holidays: [],
+      milestonePush: <%= (EasyGantt.easy_extensions? && !EasySetting.value('milestone_effective_date_from_issue_due_date')) ? true : false %>,
+      defaultZoom: "<%= EasySetting.value(:easy_gantt_default_zoom) %>",
+      paths: {
+        rootPath: '<%= home_path %>'
+      },
+      labels: {
+        buttons: {
+          button_delete: '<%= l(:button_delete) %>',
+          button_submit: '<%= l(:button_submit) %>',
+          button_yes: '<%= l(:general_text_Yes) %>',
+          button_no: '<%= l(:general_text_No) %>',
+          button_cancel: '<%= l(:button_cancel) %>',
+          button_reload: '<%= l(:reload, :scope => [:easy_gantt, :button]) %>',
+          button_save: '<%= l(:button_save) %>'
+        },
+        sample_text: '<%= l(:text, :scope => [:easy_gantt, :sample]).html_safe %>',
+        sample_global_free_text:'<%= l(:text, :scope => [:easy_gantt, :sample_global_free]).html_safe %>',
+        date: {
+          month_full: <%=raw l('date.month_names').compact.to_json %>,
+          month_short: <%=raw l('date.abbr_month_names').compact.to_json %>,
+          day_full: <%=raw l('date.day_names').compact.to_json %>,
+          day_short: <%=raw l('date.abbr_day_names').compact.to_json %>
+        },
+        types:{
+          project:'<%= l(:field_project) %>',
+          issue:'<%= l(:field_issue) %>',
+          milestone:'<%= l(:field_version) %>',
+          relation:'<%= l(:field_relation) %>'
+        },
+        errors: <%=raw l('activerecord.errors.messages').compact.to_json %>,
+        errors2:{
+          unsaved_parent:'<%= l(:unsaved_parent, :scope => [:easy_gantt, :errors]) %>'
+        },
+        problems:{
+          overMilestone:'<%= l(:overmile, :scope => [:easy_gantt, :errors]) %>',
+          too_short:'<%= l(:too_short, :scope => [:easy_gantt, :errors]) %>',
+          overdue: '<%= l(:overdue, :scope => [:easy_gantt, :errors]) %>',
+          shortDelay: '<%= l(:short_delay, :scope => [:easy_gantt, :errors]) %>'
+        },
+        gateway:{
+          sendFailed:"<%= l(:send_failed, :scope => [:easy_gantt, :gateway]) %>",
+          entitySaveFailed:"<%= l(:entity_save_failed, :scope => [:easy_gantt, :gateway]) %>",
+          allSended:"<%= l(:notice_successful_update) %>"
+        }
+      }
+    });
+
+
+
+    ysy.view = ysy.view || {};
+    ysy.view.templates = $.extend(ysy.view.templates, {
+      TaskTooltip:
+        '<div class="name"><b>{{name}}</b></div>\
+        <div class="start_date"><%= l(:field_start_date) %>: <strong>{{start_date}}</strong></div>\
+        {{#end_date}}\
+        <div class="end_date"><%= l(:field_due_date) %>: <strong>{{end_date}}</strong></div>\
+        {{/end_date}}\
+        {{#columns}}\
+          <div class="gantt-tooltip-column-{{name}}">{{label}}: <strong>{{value}}</strong></div>\
+        {{/columns}}\
+        {{#problems}}\
+          <div class="gantt-tooltip-problem">{{.}}</div>\
+        {{/problems}}\
+      ',
+      Button:'<span class="button {{active}}" title="{{title}}"><a id="{{elid}}_button_in" class="gantt_button{{icon}}" href="javascript:void(0)" >{{name}}</a></span>',
+      LinkButton:'<a class="{{css}}" title="{{title}}" href="javascript:void(0)">{{name}}</a>',
+      SuperPanel:" ",
+      reloadModal:'\
+        <h3 class="title"><%= l(:title, :scope => [:easy_gantt, :reload_modal]) %></h3>\
+        <h4><%= l(:label_errors, :scope => [:easy_gantt, :reload_modal]) %>:</h4>\
+        <ul class="gantt-reload-modal-errors">\
+          {{#errors}}\
+            <li class="gantt-reload-model-error">{{.}}</li>\
+          {{/errors}}\
+        </ul>\
+        <p><%= l(:text_reload_appeal, :scope => [:easy_gantt, :reload_modal]) %></p>\
+      ',
+      preBlocker:'<div style="left:{{pos_x}}px" class="gantt_task_relation_stop gantt_task_relation_stop_left" title="<%= l(:text_blocker_move_pre, :scope => [:easy_gantt]) %>"></div>',
+      ProblemFinder:'\
+        <%= l(:problem_finder, :scope => [:easy_gantt, :button]) %>:\
+        <span class="gantt-menu-problems-count{{#count}} gantt-with-problems{{/count}}">{{count}}</span>\
+      ',
+      ProblemFinderList:'\
+        {{#issues}}\
+          <a href="javascript:ysy.pro.problemFinder.scrollToIssue({{issueId}})"><%= l(:field_issue) %> <strong>{{name}}</strong> {{text}}</a><br>\
+        {{/issues}}\
+        {{#relations}}\
+          <a href="javascript:ysy.pro.problemFinder.scrollToIssue({{issueId}})"><%= l(:field_relation) %> <strong> {{sourceName}}</strong> - <strong>{{targetName}}</strong> {{text}}</a><br>\
+        {{/relations}}\
+      '
+    });
+  </script>
+<% end %>

@@ -1,0 +1,12 @@
+---
+hu:
+  button_print: Nyomtatás
+  button_project_menu_easy_gantt: Easy Gantt
+  button_top_menu_easy_gantt: Projekt Gantt
+  easy_gantt:
+    button:
+      day_zoom: Napok
+      jump_today: Ugrás a mai napra
+      month_zoom: Hónapok
+      reload: "Újratöltés (mentés)"
+      week_zoom: Hetek

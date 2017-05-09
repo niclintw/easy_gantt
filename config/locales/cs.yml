@@ -1,0 +1,108 @@
+---
+cs:
+  button_print: Tisk
+  button_project_menu_easy_gantt: Easy Gantt
+  button_top_menu_easy_gantt: Globální Gantt
+  easy_gantt_toolbar:
+    day: Dny
+    month: Měsíce
+    week: Týdny
+  easy_gantt:
+    button:
+      create_baseline: Baseline
+      critical_path: Kritická cesta
+      day_zoom: Dny
+      jump_today: Přejít na dnešek
+      load_sample_data: Nahrát zkušební data
+      month_zoom: Měsíce
+      moth_zoom: Měsíce
+      reload: Znovu načíst (uložit)
+      resource_management: Vytížení zdrojů
+      week_zoom: Týdny
+    errors:
+      duplicate_link: Není možné vytvořit zdvojenou vazbu
+      fresh_milestone: Není možné přidat úkol na neuložený milník. Uložte nejdříve
+        mílník.
+      loop_link: Není možné vytvořit cyklickou vazbu
+      overmile: musí končit %{effective_date}, aby dodržel milník
+      too_short: není dost dlouhý pro zbývajících %{rest} hodin odhadovaného času
+    gateway:
+      send_failed: 'Následující požadavky se nepodařilo odeslat:'
+    label_pro_upgrade: Upgradovat na PRO verzi
+    link_dir:
+      link_end: jako předchůdce
+      link_start: jako následovník
+    popup:
+      add_task:
+        heading: Add Issue feature
+        text: "Tato funkce je dostupná pouze v Easy Gantt PRO \r\n<a href=\"https://www.easyredmine.com/easy-gantt-upgrade-to-pro\">Upgradovat
+          na PRO verzi</a>"
+      baseline:
+        heading: Baselines feature
+        text: "Tato funkce je dostupná pouze v Easy Gantt PRO \r\n<a href=\"https://www.easyredmine.com/easy-gantt-upgrade-to-pro\">Upgradovat
+          na PRO verzi</a>"
+      critical:
+        heading: Kritická cesta
+        text: "Tato funkce je dostupná pouze v Easy Gantt PRO \r\n<a href=\"https://www.easyredmine.com/easy-gantt-upgrade-to-pro\">Upgradovat
+          na PRO verzi</a>"
+      resource:
+        heading: Správa zdrojů
+        text: Správa zdrojů je dostupná v <a href="https://www.easyproject.cz/"> Easy
+          Project</a>
+    sample_video:
+      text: Zde můžete vidět většinu funkcí modulu Easy Gantt
+      title: Ukázkové video
+    sample:
+      active_label: Jsou načtena testovací data!
+      close_label: Zavřít toto okno a načíst skutečná data
+      header: Jsou načtena testovací data!
+      text: Připravili jsme zkušební data, abyste <strong>vyzkoušeli všechny funkce
+        Easy Ganttu bez obav</strong>. Koukněte se také na video průvodce ukazujícího
+        užitečné triky. Zavřením tohoto okna načtete skutečná data.
+      video_id: UHgqfsrD59Q
+      video_label: Spustit video návod
+      video:
+        text: Zde můžete vidět většinu funkcí modulu Easy Gantt
+        title: Spustit video návod
+        video_id: UHgqfsrD59Q
+    title:
+      button_test: Testovací tlačítko (pouze pro testování)
+      day_zoom: Dny
+      jump_today: Přejít na dnešek
+      month_zoom: Měsíce
+      week_zoom: Týdny
+  errors:
+    duplicate_link: Cannot create duplicate link
+    fresh_milestone: Cannot add task to non-saved milestone. Save the milestone first.
+    loop_link: Cannot create looped link
+    overmile: Task should end before its milestone
+    too_short: Task is too short for its estimated hours count
+  gantt_grid_head_subject: Předmět
+  heading_delay_popup: Nastavte zpoždění úkolu ve dnech
+  heading_demo_feature_popup: Již brzy...
+  heading_easy_gantts_issues: "Úkolový gantt"
+  label_easy_gantt: Easy Gantt
+  label_pro_upgrade: Upgrade to PRO version
+  link_easy_gantt_plugin: https://www.easyredmine.com/easy-gantt-upgrade-to-pro
+  permission_edit_easy_gantt: Umožnit změny pomocí Easy Gantt
+  permission_view_easy_gantt: Zobrazit Easy Gantt
+  sample_global_free:
+    text: Sample data cannot be closed. Gantt over all projects is available only
+      in PRO version
+    video:
+      text: Here you can see most of features of Gantt over all projects
+      title: Sample video of Gantt over all projects
+      video_id: UHgqfsrD59Q
+  sample:
+    close_label: Close this window and load real project data
+    header: Sample data are loaded!
+    text: We have prepared some sample data for you to <strong>try all Gantt features
+      with no stress</strong>. We also want to encourage you to watch a video guide
+      showing useful tweaks. Closing this window will load real project data.
+    video_label: Watch video tutorial
+    video:
+      text: Here you can see most of features of this Gantt module
+      title: Sample video
+      video_id: UHgqfsrD59Q
+  text_demo_feature_popup: Tato funkce bude brzy dostupná
+  text_easy_gantt_footer: Redmine Gantt powered by Easy

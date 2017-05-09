@@ -1,0 +1,32 @@
+<% heads_for_wiki_formatter %>
+<%= content_for :header_tags do %>
+  <%= stylesheet_link_tag(:dhtmlxgantt, :plugin => 'easy_gantt', :media => 'all') %>
+  <%= stylesheet_link_tag(:easy_gantt, :plugin => 'easy_gantt', :media => 'all') %>
+  <%= javascript_include_tag(:dhtmlxgantt, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:dhtmlxgantt_marker, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:easy_gantts, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:data, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:loader, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:saver, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:logger, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:widget, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:panel_widget, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:gantt_widget, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag('libs/libs', :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag('libs/moment', :plugin => 'easy_gantt') unless defined?(EasyExtensions) %>
+  <%= javascript_include_tag(:view, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:history, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:dhtml_modif, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:dhtml_addons, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:dhtml_rewrite, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:background, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:pro_manager, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:storage, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:toolpanel, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:print, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:left_grid, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:sumrow, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:bars, :plugin => 'easy_gantt') %>
+  <%= javascript_include_tag(:sample, :plugin => 'easy_gantt') unless Redmine::Plugin.installed?(:easy_gantt_pro) %>
+  <%= javascript_include_tag(:problem_finder, :plugin => 'easy_gantt') %>
+<% end %>

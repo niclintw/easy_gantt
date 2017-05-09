@@ -1,0 +1,34 @@
+<%
+  modul_uniq_id ||= ''
+  block_name ||= ''
+  filters ||= query.filters_for_select
+  projects_locales = local_assigns.merge(filters: query.project_filters)
+  issues_locales = local_assigns.merge(filters: query.issue_filters)
+
+  select_name = (block_name.blank? ? 'add_filter_select' : "#{block_name}[add_filter_select]")
+%>
+
+<div class="add-filter tabular">
+  <p>
+    <label><%= l(:label_filter_add) %>:</label>
+    <%= select_tag(select_name, options_for_filters(filters, query),
+          include_blank: true,
+          onchange: "add_filter('#{modul_uniq_id}');",
+          class: 'select-small',
+          name: nil,
+          id: "#{modul_uniq_id}add_filter_select") %>
+  </p>
+</div>
+
+<div id="easy-gantt-filters">
+  <h2><%= l(:label_project_plural) %></h2>
+  <%= render 'easy_queries/filters', projects_locales %>
+
+  <h2><%= l(:label_issue_plural) %></h2>
+  <%= render 'easy_queries/filters', issues_locales %>
+</div>
+
+<script>
+  // Hack for filter on more queries
+  $("#easy-gantt-filters .add-filter.tabular").remove()
+</script>

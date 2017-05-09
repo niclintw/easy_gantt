@@ -1,0 +1,23 @@
+<%= javascript_include_tag(
+        # test framework
+        'jasmine/test',
+        'jasmine/jasmine_lib/jasmine',
+        'jasmine/jasmine_lib/jasmine-html',
+        'jasmine/jasmine_lib/boot',
+
+        # common tests
+        'jasmine/main',
+        'jasmine/loader',
+        'jasmine/working_helper',
+        'jasmine/pos_date',
+        'jasmine/history',
+        'jasmine/model_relations',
+        plugin: 'easy_gantt') %>
+
+<% if params[:run_jasmine_tests].is_a?(Array) %>
+  <% prepare_test_includes(params[:run_jasmine_tests]).each do |test| %>
+    <%= javascript_include_tag("jasmine/#{test[1]}", plugin: test[0]) %>
+  <% end %>
+<% end %>
+
+<%= stylesheet_link_tag(:jasmine, plugin: 'easy_gantt', media: 'all') %>

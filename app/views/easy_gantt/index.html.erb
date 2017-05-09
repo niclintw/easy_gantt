@@ -1,0 +1,167 @@
+<%
+  plugin = Redmine::Plugin.find('easy_gantt')
+  easy_extensions = EasyGantt.easy_extensions?
+
+  main_gantt_params = @query.to_params.merge(key: User.current.api_key, format: 'json')
+  main_gantt_path = if @project
+      issues_easy_gantt_path(@project, main_gantt_params)
+    else
+      projects_easy_gantt_path(main_gantt_params)
+    end
+%>
+
+<div id="easy_gantt" class="<%= easy_extensions ? 'easy' : 'redmine' %> gantt clear">
+  <% if User.current.admin? && @project.nil? %>
+    <div class="contextual settings">
+      <%
+        # Easy is called URI.escape before redirect to back
+        # So a%7Cb" is transformed into "a%257Cb" (original "a|b")
+      %>
+      <%= link_to l(:label_easy_gantt_settings), plugin_settings_path(plugin, back_url: URI.unescape(request.fullpath)), class: 'icon icon-folder' %>
+    </div>
+  <% end %>
+
+  <%= render @query, easy_query_name: l(:heading_easy_gantts_issues),
+                     wrapper_class: '',
+                     form_options: { additional_elements_to_serialize: '$("input#easy_gantt_type")' },
+                     options: { show_free_search: false, show_custom_formatting: false } %>
+
+  <%= hidden_field_tag 'gantt_type', '', id: 'easy_gantt_type' %>
+
+  <%= render 'menu_graph' %>
+
+  <div id="easy_gantt_footer" class="gantt-footer">
+    <div id="easy_gantt_footer_legend" class="gantt-footer-legend"></div>
+    <div id="gantt_footer_buttons" class="gantt-footer-menu">
+      <%= easy_gantt_js_button(l(:button_print), icon: 'icon-print', id: 'button_print') %>
+      <% if easy_extensions %>
+        <select id="easy-pdf-theme" style="width: auto">
+          <% EasyPdfTheme.all.each do |theme| %>
+            <option value="<%= theme.id %>" data-header-color="<%= theme.header_hex_color %>" data-header-font-color="<%= theme.header_font_hex_color %>" data-logo="<%= EasyPdfTheme.default_logo_image %>" <%= 'selected' if theme.is_default? %>><%= theme.name %></option>
+          <% end %>
+        </select>
+      <% end %>
+
+      <%= easy_gantt_js_button(:load_sample_data, id: 'button_sample') unless Redmine::Plugin.installed?(:easy_gantt_pro) %>
+    </div>
+
+    <% unless EasyGantt.easy_extensions? %>
+      <p><%= link_to l(:text_easy_gantt_footer), l(:link_easy_gantt_plugin), target: '_blank' %></p>
+    <% end %>
+  </div>
+</div>
+
+<%= render 'includes' %>
+<%= render 'test_includes' if params[:run_jasmine_tests] || params[:spec] %>
+<%= render 'js_prepare' %>
+
+<%= content_for :header_tags do %>
+  <script type="text/javascript">
+    window.ysy = window.ysy || {};
+    ysy.settings = ysy.settings || {};
+    $.extend(true, ysy.settings, {
+      hoursPerDay: 8,
+      linkBothDir: <%= EasySetting.value(:easy_gantt_keep_link_delay_in_drag) %>,
+      parentIssueDates: <%= Setting.parent_issue_dates == 'derived' %>,
+      schemeBy: '<%= if @project then;EasySetting.value('issue_color_scheme_for'); else 'project_priority'; end %>',
+      paths: {
+        mainGantt: "<%= main_gantt_path.html_safe %>",
+        issuePOST: "<%= issues_path(:format => 'json', :key => User.current.api_key) %>",
+        issuePUT: "<%= issue_path(':issueID', :format => 'json', :key => User.current.api_key) %>",
+        issueDELETE: "<%= issue_path(':issueID', :format => 'json', :key => User.current.api_key) %>",
+        relationPOST: "<%= issue_relations_path(':issueID', :format => 'json', :key => User.current.api_key) %>",
+        relationPUT: "<%= relation_easy_gantt_path(':projectID',':relaID', :format => 'json', :key => User.current.api_key) %>",
+        relationDELETE: "<%= url_for(:id => ':relaID', :controller => :issue_relations, :action => :destroy, :format => 'json', :key => User.current.api_key, :only_path => true)%>",
+        versionPOST: "<%= project_versions_path(':projectID', :format => 'json', :key => User.current.api_key) %>",
+        versionPUT: "<%= version_path(':versionID', :format => 'json', :key => User.current.api_key) %>",
+        sample_data: "<%= home_path %>plugin_assets/easy_gantt/javascripts/sample_{{version}}.json"
+      },
+      labels: {
+        links: {
+          start_to_start: '<%= l(:label_start_to_start) %>',
+          start_to_finish: '<%= l(:label_start_to_finish) %>',
+          finish_to_finish: '<%= l(:label_finish_to_finish) %>',
+          precedes: '<%= l(:label_precedes) %>',
+          relates: '<%= l(:label_relates_to) %>',
+          copied_to: '<%= l(:label_copied_to) %>',
+          blocks: '<%= l(:label_blocks) %>',
+          duplicates: '<%= l(:label_duplicates) %>'
+        },
+        errors2:{
+          loop_link:'<%= l(:loop_link, :scope => [:easy_gantt, :errors]) %>',
+          link_target_new:'<%= l(:link_target_new, :scope => [:easy_gantt, :errors]) %>',
+          link_target_readonly: '<%= l(:link_target_readonly, :scope => [:easy_gantt, :errors]) %>',
+          unsupported_link_type:'<%= l(:unsupported_link_type, :scope => [:easy_gantt, :errors]) %>',
+          duplicate_link:'<%= l(:duplicate_link, :scope => [:easy_gantt, :errors]) %>'
+        }
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    window.ysy = window.ysy || {};
+    ysy.view = ysy.view || {};
+    ysy.view.templates = $.extend(ysy.view.templates,{
+      LinkConfigPopup: "\
+      <h3 class='title'><%= l(:heading_delay_popup) %></h3>\
+      <label for='link_delay_input'><%= l(:field_delay) %>:</label><input id='link_delay_input' type='number' min='-1' value='{{delay}}' size='3' >\
+      <a id='link_fix_actual' class='button icon icon-link' href='javascript:void(0)' ><%= l(:button_use_actual_delay) %></a>\
+      <div id='link_popup_button_cont' ><hr>\
+        <a id='link_delete' class='icon icon-unlink button'  href='javascript:void(0)'><%= l(:button_delete) %></a>\
+        <a id='link_close' class='icon icon-save button-positive'  href='javascript:void(0)' style='float:right'><%= l(:button_submit) %></a>\
+      </div>\
+    ",
+    SuperPanel:'\
+    {{#sample}}\
+    <div id="sample_cont" class="flash notice gantt-sample-flash">\
+    <h2 id="sample_label"><%= l(:header, :scope => [:easy_gantt, :sample]) %></h2>\
+    <p>{{{text}}}</p>\
+    \
+    <p class="" style="text-align:center">\
+    <a id="sample_video_button" class="icon icon-youtube" href="javascript:void(0)"><%= l(:video_label, :scope => [:easy_gantt, :sample]) %></a>\
+    {{^global_free}}\
+    <a id="sample_close_button" class="gantt-sample-close-button button button-important" href="javascript:void(0)" title="<%= l(:close_label, :scope => [:easy_gantt, :sample]).html_safe %>"><%= l(:close_label, :scope => [:easy_gantt, :sample]).html_safe %></a>\
+    {{/global_free}}\
+    {{#global_free}}\
+    <a id="sample_upgrade_button" class="button button-positive" href="<%= l(:link_easy_gantt_plugin).html_safe %>" target="_blank" title="<%= l(:label_pro_upgrade, :scope => [:easy_gantt]) %>"><%= l(:label_pro_upgrade, :scope => [:easy_gantt]) %></a>\
+    {{/global_free}}\
+    </p>\
+    <div class="clear"></div>\
+    </div>\
+    {{/sample}}\
+    ',
+    easy_unimplemented:'<h3 class="title">{{modal.title}}</h3><span>{{{modal.text}}}</span>',
+    video_modal:'<h3 class="title"><%= l(:title, :scope => [:easy_gantt, :sample, :video]) %></h3>\
+      <iframe class="gantt-modal-video" width="800" height="450"\
+      src="//www.youtube.com/embed/<%= l(:video_id, :scope => [:easy_gantt, :sample, :video]) %>?autoplay=1">\
+      </iframe>\
+      <p><%= l(:text, :scope => [:easy_gantt, :sample, :video]) %></p>\
+    ',
+    video_modal_global:'<h3 class="title"><%= l(:title, :scope => [:easy_gantt, :sample_global_free, :video]) %></h3>\
+      <iframe class="gantt-modal-video" width="800" height="450"\
+      src="//www.youtube.com/embed/<%= l(:video_id, :scope => [:easy_gantt, :sample_global_free, :video]) %>?autoplay=1">\
+      </iframe>\
+      <p><%= l(:text, :scope => [:easy_gantt, :sample_global_free, :video]) %></p>\
+    ',
+    legend:'{{text}}',
+      linkDragModal: '\
+      {{#errorReason}}\
+        <b>{{errorReason}}</b>\
+      {{/errorReason}}\
+      {{^errorReason}}\
+        <%= l(:label_relation_new) %>{{#type}} <b>{{type}}</b>{{/type}}<br>\
+        <b>{{from}}</b> <%= l(:link_end, :scope => [:easy_gantt, :link_dir]) %><br>\
+        {{#to}}<b>{{to}}</b> <%= l(:link_start, :scope => [:easy_gantt, :link_dir]) %>{{/to}}\
+      {{/errorReason}}\
+    '
+    });
+  </script>
+<% end %>
+
+<%= call_hook(:view_easy_gantt_index_bottom, project: @project) %>
+
+<% content_for :sidebar do %>
+  <%= call_hook(:view_easy_gantt_index_sidebar, project: @project, query: @query) %>
+
+  <% # DEPRECATED %>
+  <%= call_hook(:view_easy_gantts_issues_sidebar, {:project => @project, :query => @query}) %>
+<% end %>

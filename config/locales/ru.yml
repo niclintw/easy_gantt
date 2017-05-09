@@ -1,0 +1,44 @@
+---
+ru:
+  button_print: "Печатать"
+  button_project_menu_easy_gantt: Easy Гант
+  button_top_menu_easy_gantt: Easy Гант
+  easy_gantt_toolbar:
+    day: "Дни"
+    month: "Месяцы"
+    week: "Недели"
+  easy_gantt:
+    buton_create_baseline: "Базовый план"
+    button_critical_path: "Критический путь"
+    button_resource_management: "Управление персоналом"
+    error_overmile: "Дата выполнения задачи должна находиться до даты Вехи (Версии)"
+    error_too_short: "Залача слишком короткая для рассчета запланированного времени"
+    errors:
+      overmile: "Дата выполнения задачи должна находиться до даты Вехи (Версии)"
+      too_short: "Залача слишком короткая для рассчета запланированного времени"
+    link_dir:
+      link_end: "предшествует"
+      link_start: "следует за"
+    soon:
+      add_task:
+        heading: "Функция Дабавить задачу"
+        text: Эта функция скоро появится в продукции. <a href="https://www.easyredmine.com/redmine-gantt-plugin">Проверить
+          доступность!</a>
+      baseline:
+        heading: "Функция Базовый План"
+        text: Функция "Базовый План" скоро появится в продукции. <a href="https://www.easyredmine.com/redmine-gantt-plugin>Проверить
+          доступность!</a>
+      critical:
+        heading: "Функция Критический Путь"
+        text: "Функция Критический путь скоро появится в продукции.\r\n<a href=\"https://www.easyredmine.com/redmine-gantt-plugin\">Проверить
+          доступность!</a>"
+      resource:
+        heading: "Функция Управление Персоналом"
+        text: Функция Управление Персоналом доступна только в <a href="https://www.easyredmine.com/">
+          Easy Redmine</a>
+  heading_delay_popup: "Задать задержку (в днях)"
+  heading_demo_feature_popup: "Скоро в продукции"
+  heading_easy_gantts_issues: "Гант по задачам"
+  link_easy_gantt_footer: https://www.easyredmine.com/redmine-gantt-plugin
+  text_demo_feature_popup: "Эта функия будет скоро доступна"
+  text_easy_gantt_footer: Redmine Гант от Easy

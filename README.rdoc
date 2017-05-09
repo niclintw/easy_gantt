@@ -1,0 +1,12 @@
+= easy_gantt
+
+== REQUIREMENTS
+* Redmine 3+
+* You need to REST api enabled first (Administration > Settings > Authentication)
+
+== INSTALLATION
+1. Copy your plugin directory into #{RAILS_ROOT}/plugins.
+
+2. Restart Redmine
+
+You should now be able to see the plugin list in Administration -> Plugins.

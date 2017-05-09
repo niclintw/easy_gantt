@@ -1,0 +1,77 @@
+---
+fr:
+  button_print: Imprimer
+  button_project_menu_easy_gantt: Easy Gantt
+  button_top_menu_easy_gantt: Easy Gantt
+  easy_gantt_toolbar:
+    day: Jours
+    month: Mois
+    week: Semaines
+  easy_gantt:
+    button:
+      create_baseline: Lignes de base
+      critical_path: Chemin critique
+      day_zoom: Jours
+      month_zoom: Mois
+      resource_management: Gestion des resources
+      week_zoom: Semaines
+    errors:
+      duplicate_link: Cannot create duplicate link
+      fresh_milestone: Cannot add task to non-saved milestone. Save the milestone
+        first.
+      loop_link: Cannot create looped link
+      overmile: La tâche doit être terminée avant la date d'échéance du jalon
+      too_short: Tâche est trop courte pour le nombre d'heures estimés
+    gateway:
+      send_failed: Request failed
+    label_pro_upgrade: Upgrade to PRO version
+    link_dir:
+      link_end: as preceding
+      link_start: as following
+    popup:
+      add_task:
+        heading: Ajouter la tâche fonctionnalité
+        text: Cette fonctionnalité est à venir bientôt. <a href="https://www.easyredmine.com/easy-gantt-upgrade-to-pro">Check
+          the availability here!</a>
+      baseline:
+        heading: Lignes de base disposent
+        text: Baselines fonctionnalité bientôt disponible. <a href="https://www.easyredmine.com/easy-gantt-upgrade-to-pro">Check
+          the availability here!</a>
+      critical:
+        heading: Fonctionnalité du chemin critique
+        text: "Fonctionnalité du chemin critique sera disponible bientôt.\r\n<a href=\"https://www.easyredmine.com/easy-gantt-upgrade-to-pro\">Check
+          the availability here!</a>"
+      resource:
+        heading: Fonctionnalité de gestion de ressources
+        text: Fonctionnalité de gestion de ressources est disponible <a href="https://www.easyredmine.com/">
+          Easy Redmine</a>
+    sample_global_free:
+      text: Sample data cannot be closed. Gantt over all projects is available only
+        in PRO version
+      video:
+        text: Here you can see most of features of Gantt over all projects
+        title: Sample video of Gantt over all projects
+        video_id: zd3M0KYxcXM
+    sample:
+      close_label: Close this window and load real project data
+      header: Sample data are loaded!
+      text: We have prepared some sample data for you to <strong>try all Gantt features
+        with no stress</strong>. We also want to encourage you to watch a video guide
+        showing useful tweaks. Closing this window will load real project data.
+      video_label: Watch video tutorial
+      video:
+        text: Here you can see most of features of this Gantt module
+        title: Sample video
+        video_id: UHgqfsrD59Q
+    title:
+      button_test: Test button (only for testing)
+      day_zoom: Zoom to day scale
+      jump_today: Display timeline at today
+      month_zoom: Zoom to month scale
+      week_zoom: Zoom to week scale
+  heading_delay_popup: Définir délai en jours
+  heading_demo_feature_popup: "À venir"
+  heading_easy_gantts_issues: Gantt des tâches
+  link_easy_gantt_plugin: https://www.easyredmine.com/easy-gantt-upgrade-to-pro
+  text_demo_feature_popup: Cette fonctionnalité sera disponible bientôt.
+  text_easy_gantt_footer: Redmine Gantt powered by Easy

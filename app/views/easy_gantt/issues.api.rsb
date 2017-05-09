@@ -1,0 +1,36 @@
+api.easy_gantt_data do
+  api.start_date @start_date
+  api.end_date @end_date
+
+  api_render_columns(api, @query)
+  api_render_projects(api, @projects)
+  api_render_issues(api, @issues, with_columns: true)
+
+  api.array :relations do
+    @relations.each do |rel|
+      api.relation do
+        api.id rel.id
+        api.source_id rel.issue_from_id
+        api.target_id rel.issue_to_id
+        api.type rel.relation_type
+        api.delay rel.delay.to_i
+      end
+    end
+  end
+
+  api_render_versions(api, @versions)
+
+  if EasySetting.value(:easy_gantt_show_holidays) && params[:subproject_loading].blank?
+    api_render_holidays(api, @start_date - 1.month, @end_date + 1.month)
+  end
+
+  # Load only on first request
+  if params[:subproject_loading].nil?
+    api.schemes do
+      api_render_scheme(api, IssuePriority)
+      api_render_scheme(api, IssueStatus)
+      api_render_scheme(api, Tracker)
+    end
+  end
+
+end
